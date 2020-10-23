@@ -13,3 +13,5 @@ npm i -D supertest @types/supertest
       #+END_SRC
   + configuração do express para fazer parse de json
     - body-parser.ts
+- configuração do CORS 
+  + criação do teste de integração do middleware de cors - src/main/middlewares/cors.test.ts
