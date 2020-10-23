@@ -1,0 +1,15 @@
+* 8.1 - Testando middlewares do Express
+
+- criação do src/main/server.ts
+  + onde é criada a árvore de dependências
+- criação do script "npm start" para inicializar o server com o Sucrase(para rodar o server com Typescript)
+- configuração dos middlewares - src/main/config/middlewares.ts
+- criação de pasta para middlewares - src/main/config/middlewares
+  + criação de teste de integração para o body-parser middleware
+    - body-parser.test.ts
+    - instalaçao da biblioteca supertest p/ emulação de requisição http
+      #+BEGIN_SRC sh
+npm i -D supertest @types/supertest
+      #+END_SRC
+  + configuração do express para fazer parse de json
+    - body-parser.ts
