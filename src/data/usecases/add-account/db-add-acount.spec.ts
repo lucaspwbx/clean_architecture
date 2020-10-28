@@ -57,7 +57,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('should throw inf encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
-    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject))
+    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((_, reject) => reject))
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
@@ -69,7 +69,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('should throw inf addAccountRepository throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
-    jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject))
+    jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((_, reject) => reject))
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
