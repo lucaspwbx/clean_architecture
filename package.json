@@ -10,7 +10,8 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.ts",
     "test:integration": "npm test -- --watch -c jest-integration-config.ts",
     "test:staged": "npm test",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "test:clean": "jest --clearCache"
   },
   "keywords": [],
   "author": "",
