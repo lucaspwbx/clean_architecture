@@ -3,7 +3,7 @@ import { Encrypter, AddAccountModel, AccountModel, AddAccountRepository } from '
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub {
-    async encrypt (value: string): Promise<string> {
+    async encrypt(_value: string): Promise<string> {
       return await new Promise(resolve => resolve('hashed_password'))
     }
   }
@@ -12,7 +12,7 @@ const makeEncrypter = (): Encrypter => {
 
 const makeAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(_account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
         id: 'valid_id',
         name: 'valid_name',
@@ -81,7 +81,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
-    const addSpy = jest.spyOn(addAccountRepositoryStub,'add')
+    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
