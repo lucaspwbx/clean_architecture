@@ -11,7 +11,8 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.ts",
     "test:staged": "npm test",
     "test:ci": "npm test -- --coverage --watchAll",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "lint": "eslint 'src/**' --fix"
   },
   "keywords": [],
   "author": "",
