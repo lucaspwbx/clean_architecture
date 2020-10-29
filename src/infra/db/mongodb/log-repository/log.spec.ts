@@ -3,29 +3,29 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import { LogMongoRepository } from './log'
 
 const makeSut = (): LogMongoRepository => {
-    return new LogMongoRepository()
+  return new LogMongoRepository()
 }
 
 describe('Log Mongo Repository', () => {
-    let errorCollection: Collection
+  let errorCollection: Collection
 
-    beforeAll(async () => {
-        await MongoHelper.connect(process.env.MONGO_URL)
-    })
+  beforeAll(async () => {
+    await MongoHelper.connect(process.env.MONGO_URL)
+  })
 
-    afterAll(async () => {
-        await MongoHelper.disconnect()
-    })
+  afterAll(async () => {
+    await MongoHelper.disconnect()
+  })
 
-    beforeEach(async () => {
-        errorCollection = await MongoHelper.getCollection('errors')
-        await errorCollection.deleteMany({})
-    })
+  beforeEach(async () => {
+    errorCollection = await MongoHelper.getCollection('errors')
+    await errorCollection.deleteMany({})
+  })
 
-    test('should create an error long on success', async () => {
-        const sut = makeSut()
-        await sut.logError('any_error')
-        const count = await errorCollection.countDocuments()
-        expect(count).toBe(1)
-    })
+  test('should create an error long on success', async () => {
+    const sut = makeSut()
+    await sut.logError('any_error')
+    const count = await errorCollection.countDocuments()
+    expect(count).toBe(1)
+  })
 })

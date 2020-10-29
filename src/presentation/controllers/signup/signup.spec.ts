@@ -12,7 +12,7 @@ interface SutTypes {
 
 const makeAddAcount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add(_account: AddAccountModel): Promise<AccountModel> {
+    async add (_account: AddAccountModel): Promise<AccountModel> {
       return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -21,7 +21,7 @@ const makeAddAcount = (): AddAccount => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate(_input: any): Error {
+    validate (_input: any): Error {
       return null
     }
   }
@@ -59,7 +59,7 @@ describe('SignUp Controller', () => {
   test('should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
-      return await new Promise((_, reject) => reject(new Error()))
+      return await new Promise((resolve, reject) => reject(new Error()))
     })
 
     const httpResponse = await sut.handle(makeFakeRequest())

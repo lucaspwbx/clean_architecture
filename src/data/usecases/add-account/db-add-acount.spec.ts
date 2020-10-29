@@ -3,7 +3,7 @@ import { Encrypter, AddAccountModel, AccountModel, AddAccountRepository } from '
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub {
-    async encrypt(_value: string): Promise<string> {
+    async encrypt (_value: string): Promise<string> {
       return await new Promise(resolve => resolve('hashed_password'))
     }
   }
@@ -12,22 +12,22 @@ const makeEncrypter = (): Encrypter => {
 
 const makeAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
-    async add(_account: AddAccountModel): Promise<AccountModel> {
+    async add (_account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
         id: 'valid_id',
         name: 'valid_name',
         email: 'valid_email',
         password: 'hashed_password'
       }
-      return new Promise(resolve => resolve(fakeAccount))
+      return await new Promise(resolve => resolve(fakeAccount))
     }
   }
   return new AddAccountRepositoryStub()
 }
 
 interface SutTypes {
-  sut: DbAddAccount,
-  encrypterStub: Encrypter,
+  sut: DbAddAccount
+  encrypterStub: Encrypter
   addAccountRepositoryStub: AddAccountRepository
 }
 
@@ -57,7 +57,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('should throw inf encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
-    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((_, reject) => reject))
+    jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject))
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
@@ -69,7 +69,7 @@ describe('DbAddAccount Usecase', () => {
 
   test('should throw inf addAccountRepository throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
-    jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((_, reject) => reject))
+    jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject))
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
@@ -109,6 +109,5 @@ describe('DbAddAccount Usecase', () => {
       email: 'valid_email',
       password: 'hashed_password'
     })
-  });
-
+  })
 })
