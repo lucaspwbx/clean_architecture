@@ -1,14 +1,15 @@
+import { Hasher } from '../../protocols/cryptography/hasher'
+import { UpdateAccessTokenRepository } from '../../protocols/db/account/update-access-token-repository'
 import {
   Authentication,
   LoadAccountByEmailRepository,
   AuthenticationModel,
   HashComparer,
-  TokenGenerator,
-  UpdateAccessTokenRepository
+  TokenGenerator
 } from './db-authentication-protocols'
 
 export class DbAuthentication implements Authentication {
-  constructor (private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository, private readonly hashComparer: HashComparer, private readonly tokenGenerator: TokenGenerator, private readonly updateAccessTokenRepository: UpdateAccessTokenRepository) {
+  constructor (private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository, private readonly hashComparer: HashComparer, private readonly hasher: Hasher, private readonly updateAccessTokenRepository: UpdateAccessTokenRepository) {
   }
 
   async auth (authentication: AuthenticationModel): Promise<string> {
@@ -16,7 +17,7 @@ export class DbAuthentication implements Authentication {
     if (account) {
       const isValid = await this.hashComparer.compare(authentication.password, account.password)
       if (isValid) {
-        const accessToken = await this.tokenGenerator.generate(account.id)
+        const accessToken = await this.hasher.hash(account.id)
         await this.updateAccessTokenRepository.updateAccessToken(account.id, accessToken)
         return accessToken
       }
