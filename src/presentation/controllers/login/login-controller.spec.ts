@@ -1,6 +1,6 @@
 import { serverError, unauthorized, ok } from '../../helpers/http/http-helper'
-import { HttpRequest, Authentication } from './login-protocols'
-import { LoginController } from './login'
+import { HttpRequest, Authentication } from './login-controller-protocols'
+import { LoginController } from './login-controller'
 import { Validation } from '../../protocols/validation'
 import { AuthenticationModel } from '../../../domain/usecases/authentication'
 
