@@ -1,4 +1,3 @@
-import { Hasher } from '../../protocols/cryptography/hasher'
 import { UpdateAccessTokenRepository } from '../../protocols/db/account/update-access-token-repository'
 import {
   Authentication,
@@ -9,10 +8,10 @@ import {
 } from './db-authentication-protocols'
 
 export class DbAuthentication implements Authentication {
-  constructor (private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository, private readonly hashComparer: HashComparer, private readonly encrypter: Encrypter, private readonly updateAccessTokenRepository: UpdateAccessTokenRepository) {
+  constructor(private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository, private readonly hashComparer: HashComparer, private readonly encrypter: Encrypter, private readonly updateAccessTokenRepository: UpdateAccessTokenRepository) {
   }
 
-  async auth (authentication: AuthenticationModel): Promise<string> {
+  async auth(authentication: AuthenticationModel): Promise<string> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(authentication.email)
     if (account) {
       const isValid = await this.hashComparer.compare(authentication.password, account.password)
