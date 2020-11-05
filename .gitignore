@@ -3,4 +3,6 @@ dist
 coverage
 /globalConfig.json
 .log
-/data/
+data
+!src/data
+.vscode
