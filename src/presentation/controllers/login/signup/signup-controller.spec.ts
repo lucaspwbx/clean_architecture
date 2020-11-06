@@ -1,12 +1,12 @@
 import { SignUpController } from './signup-controller'
 import { AccountModel, AddAccount, AddAccountModel, Validation, Authentication, AuthenticationModel } from './signup-controller-protocols'
-import { HttpRequest } from '../../protocols'
-import { ok, serverError, badRequest, forbidden } from '../../helpers/http/http-helper'
-import { EmailinUseError, MissingParamError, ServerError } from '../../../presentation/errors'
+import { HttpRequest } from '../../../protocols'
+import { ok, serverError, badRequest, forbidden } from '../../../helpers/http/http-helper'
+import { EmailinUseError, MissingParamError, ServerError } from '../../../../presentation/errors'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (_authenticationModel: AuthenticationModel): Promise<string> {
+    async auth(_authenticationModel: AuthenticationModel): Promise<string> {
       return await new Promise(resolve => resolve('any_token'))
     }
   }
@@ -22,7 +22,7 @@ interface SutTypes {
 
 const makeAddAcount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add (_account: AddAccountModel): Promise<AccountModel> {
+    async add(_account: AddAccountModel): Promise<AccountModel> {
       return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -31,7 +31,7 @@ const makeAddAcount = (): AddAccount => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (_input: any): Error {
+    validate(_input: any): Error {
       return null
     }
   }

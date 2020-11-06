@@ -1,12 +1,12 @@
-import { serverError, unauthorized, ok } from '../../helpers/http/http-helper'
+import { serverError, unauthorized, ok } from '../../../helpers/http/http-helper'
 import { HttpRequest, Authentication } from './login-controller-protocols'
 import { LoginController } from './login-controller'
-import { Validation } from '../../protocols/validation'
-import { AuthenticationModel } from '../../../domain/usecases/authentication'
+import { Validation } from '../../../protocols/validation'
+import { AuthenticationModel } from '../../../../domain/usecases/authentication'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (_authenticationModel: AuthenticationModel): Promise<string> {
+    async auth(_authenticationModel: AuthenticationModel): Promise<string> {
       return await new Promise(resolve => resolve('any_token'))
     }
   }
@@ -15,7 +15,7 @@ const makeAuthentication = (): Authentication => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (_input: any): Error {
+    validate(_input: any): Error {
       return null
     }
   }
