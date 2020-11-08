@@ -1,5 +1,4 @@
-import { LoadAccountByToken } from '@/domain/usecases/load-account-by-token'
-import { AccountModel, HttpRequest } from '../controllers/login/signup/signup-controller-protocols'
+import { LoadAccountByToken, HttpRequest, AccountModel } from './auth-middleware-protocols'
 import { AccessDeniedError } from '../errors'
 import { forbidden, ok, serverError } from '../helpers/http/http-helper'
 import { AuthMiddleware } from './auth-middleware'
