@@ -2,6 +2,8 @@
  "TS Debug Server"
  (list :type "node"
        :request "launch"
-       :program "${workspacefolder}/src/main/server.ts"
+       :name "Launch Program"
+       :program "${workspaceFolder}/src/main/server.ts"
        :outFiles ["${workspaceFolder}/dist/**/*.js"]
-       :name "Foo Server"))
+       :sourceMaps t
+       :preLaunchTask "npm  run build"))
