@@ -49,6 +49,7 @@ describe('survey routes', () => {
         password: '123',
         role: 'admin'
       })
+
       const id = res.ops[0]._id
       const accessToken = sign({ id }, env.jwtSecret)
       await accountCollection.updateOne({
