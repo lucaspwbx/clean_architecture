@@ -22,6 +22,20 @@ describe('Survey Mongo Repository', () => {
     await surveyCollection.deleteMany({})
   })
 
+  describe('loadAll()', () => {
+    test('should load all surveys on success', async () => {
+      await surveyCollection.insertMany([{
+        question: 'any_question'
+      },
+      {
+        question: 'other_question'
+      }])
+      const sut = makeSut()
+      const surveys = await sut.loadAll()
+      expect(surveys.length).toBe(2)
+    })
+  })
+
   describe('add()', () => {
     test('should return a survey on add success', async () => {
       const sut = makeSut()
