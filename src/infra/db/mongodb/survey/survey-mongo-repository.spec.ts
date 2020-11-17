@@ -50,6 +50,7 @@ describe('Survey Mongo Repository', () => {
       const sut = makeSut()
       const survey = await sut.loadById(res.ops[0]._id)
       expect(survey).toBeTruthy()
+      expect(survey.id).toBeTruthy()
     })
   })
 
@@ -69,6 +70,7 @@ describe('Survey Mongo Repository', () => {
       })
       const survey = await surveyCollection.findOne({ question: 'any_question' })
       expect(survey).toBeTruthy()
+      expect(survey.id).toBeTruthy()
     })
   })
 })
