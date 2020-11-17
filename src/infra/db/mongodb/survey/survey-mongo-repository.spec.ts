@@ -42,6 +42,17 @@ describe('Survey Mongo Repository', () => {
     })
   })
 
+  describe('loadById()', () => {
+    test('should load survey by id on success', async () => {
+      const res = await surveyCollection.insertOne({
+        question: 'any_question'
+      })
+      const sut = makeSut()
+      const survey = await sut.loadById(res.ops[0]._id)
+      expect(survey).toBeTruthy()
+    })
+  })
+
   describe('add()', () => {
     test('should return a survey on add success', async () => {
       const sut = makeSut()
