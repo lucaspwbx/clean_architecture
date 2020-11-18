@@ -3,7 +3,8 @@ export type HttpResponse = {
   body: any
 }
 
-export interface HttpRequest {
+export type HttpRequest = {
   body?: any
   headers?: any
+  params?: any
 }
