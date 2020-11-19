@@ -8,24 +8,23 @@ import env from '@/main/config/env'
 let surveyCollection: Collection
 let accountCollection: Collection
 
-// const makeAccessToken = async (): Promise<string> => {
-//   const res = await accountCollection.insertOne({
-//     name: 'Rodrigo',
-//     email: 'rodrigo.manguinho@gmail.com',
-//     password: '123',
-//     role: 'admin'
-//   })
-//   const id = res.ops[0]._id
-//   const accessToken = sign({ id }, env.jwtSecret)
-//   await accountCollection.updateOne({
-//     _id: id
-//   }, {
-//     $set: {
-//       accessToken
-//     }
-//   })
-//   return accessToken
-// }
+const makeAccessToken = async (): Promise<string> => {
+  const res = await accountCollection.insertOne({
+    name: 'Rodrigo',
+    email: 'rodrigo.manguinho@gmail.com',
+    password: '123',
+  })
+  const id = res.ops[0]._id
+  const accessToken = sign({ id }, env.jwtSecret)
+  await accountCollection.updateOne({
+    _id: id
+  }, {
+    $set: {
+      accessToken
+    }
+  })
+  return accessToken
+}
 
 describe('survey routes', () => {
   beforeAll(async () => {
@@ -36,13 +35,13 @@ describe('survey routes', () => {
     await MongoHelper.disconnect()
   })
 
-  // beforeEach(async () => {
-  //   surveyCollection = await MongoHelper.getCollection('surveys')
-  //   await surveyCollection.deleteMany({})
+  beforeEach(async () => {
+    surveyCollection = await MongoHelper.getCollection('surveys')
+    await surveyCollection.deleteMany({})
 
-  //   accountCollection = await MongoHelper.getCollection('accounts')
-  //   await accountCollection.deleteMany({})
-  // })
+    accountCollection = await MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
+  })
 
   describe('PUT /surveys/:surveyId/results', () => {
     test('should return 403 on save survey result without accessToken', async () => {
@@ -52,6 +51,28 @@ describe('survey routes', () => {
           answer: 'any_answer'
         })
         .expect(403)
+    })
+
+    test('should return 200 on save survey result with accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [{
+          answer: 'Answer 1',
+          image: 'http://image-name.com'
+
+        }, {
+          answer: 'Answer 2'
+        }],
+        date: new Date()
+      })
+      await request(app)
+        .put(`/api/surveys/${res.ops[0]._id}/results`)
+        .set('x-access-token', accessToken)
+        .send({
+          answer: 'Answer 1'
+        })
+        .expect(200)
     })
   })
 })
